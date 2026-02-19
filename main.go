@@ -3,6 +3,7 @@ package main
 import (
 	bankaccount "abah-go/projects/payment/bank-account"
 	"abah-go/projects/payment/payroll"
+	"abah-go/projects/payment/withdrawals"
 	"fmt"
 )
 
@@ -157,79 +158,39 @@ func main() {
 
 	// put all the employee into a company variable
 	companyPayroll := []payroll.Payment{}
+	withdrawalPayroll := []withdrawals.Payment{}
 
 	// Range through each employee and append to the payroll
 	for _, employee := range hybrid {
 		companyPayroll = append(companyPayroll, employee)
+		withdrawalPayroll = append(withdrawalPayroll, employee)
 	}
 	for _, employee := range remote {
 		companyPayroll = append(companyPayroll, employee)
+		withdrawalPayroll = append(withdrawalPayroll, employee)
 	}
 	for _, employee := range fulltime {
 		companyPayroll = append(companyPayroll, employee)
+		withdrawalPayroll = append(withdrawalPayroll, employee)
 	}
 
-	payroll.ProcessPayroll(companyPayroll)
+	payroll.ProcessPayroll(companyPayroll, 5)
 
 	fmt.Println("Salary Payment successfull")
 
-	// Allow employee view their balances
-
-	fmt.Println("\n╔════════════════════════════════════════╗")
-	fmt.Println("║       EMPLOYEE ACCOUNT BALANCES        ║")
-	fmt.Println("╚════════════════════════════════════════╝")
-
-	for _, account := range employeeBankAccounts {
-		fmt.Println(account)
+	withdrawByAccount := map[string]float64{
+		"ACC-001": 3000,
+		"ACC-002": 1200,
+		"ACC-003": 800,
+		"ACC-004": 450,
+		"ACC-005": 300,
+		"ACC-006": 15000,
 	}
 
-	// NOT RELATED BUT ALLOW EMPLOYEE WITHDRAW FROM ACCOUNT
-	fmt.Println("\n\n╔════════════════════════════════════════╗")
-	fmt.Println("║        EMPLOYEE TRANSACTIONS           ║")
-	fmt.Println("╚════════════════════════════════════════╝")
-
-	fmt.Println("\n--- Sarah pays rent ---")
-	err := employeeBankAccounts[0].Withdraw(3000.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	fmt.Println("\n--- James buys new laptop ---")
-	err = employeeBankAccounts[1].Withdraw(1200.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	fmt.Println("\n--- Maria pays car loan ---")
-	err = employeeBankAccounts[2].Withdraw(800.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	fmt.Println("\n--- David goes grocery shopping ---")
-	err = employeeBankAccounts[3].Withdraw(450.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	fmt.Println("\n--- Jennifer pays utilities ---")
-	err = employeeBankAccounts[4].Withdraw(300.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	fmt.Println("\n--- Michael tries to withdraw more than he has (this will fail!) ---")
-	err = employeeBankAccounts[5].Withdraw(15000.0)
-	if err != nil {
-		fmt.Printf("❌ Error: %v\n", err)
-	}
-
-	// ========================================
-	// STEP 6: FINAL BALANCES
-	// ========================================
+	withdrawals.ProcessWithdrawal(withdrawalPayroll, withdrawByAccount, 2)
 
 	fmt.Println("\n\n╔════════════════════════════════════════╗")
-	fmt.Println("║      FINAL ACCOUNT BALANCES            ║")
+	fmt.Println("║      FINAL ACCOUNT BALANCE           ║")
 	fmt.Println("╚════════════════════════════════════════╝")
 
 	// Display all accounts with their final balances
