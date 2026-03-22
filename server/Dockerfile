@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 
 # Build with CGO enabled
-RUN CGO_ENABLED=1 GOOS=linux go build -o payment ./cmd
+RUN CGO_ENABLED=1 GOOS=linux go build -o payment ./server
 
 EXPOSE 4040
 
