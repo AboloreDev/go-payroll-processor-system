@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { useIsMobile } from "../hooks/use-mobile";
 
 export const description = "An interactive area chart";
 
