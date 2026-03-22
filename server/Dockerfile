@@ -1,4 +1,4 @@
-FROM golang:1.23
+FROM golang:1.25
 
 # Install gcc for CGO (required by go-sqlite3)
 RUN apt-get update && apt-get install -y gcc musl-dev
