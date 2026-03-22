@@ -7,7 +7,7 @@ func CORS(next http.Handler) http.Handler {
 
 		// Allow requests from our React frontend
 		w.Header().Set("Access-Control-Allow-Origin", 
-		"https://go-payroll-processor-system.vercel.app/")
+		"https://go-payroll-processor-system.vercel.app")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
